@@ -1,0 +1,21 @@
+{
+  "name": "Rails & Postgres",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/app",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.colorTheme": "Solarized Dark" 
+      },
+
+      "extensions": [
+        "rebornix.Ruby",
+        "castwide.solargraph",
+        "misogi.ruby-rubocop"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "postCreateCommand": "gem install rails && (bundle install || rails new . -d postgresql --api --force) && chown -R 1000:1000 ."
+}

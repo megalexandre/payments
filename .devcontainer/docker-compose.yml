@@ -1,0 +1,23 @@
+services:
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces/app:cached
+    environment:
+      DATABASE_URL: "postgres://postgres:password@db:5432/postgres"
+    depends_on:
+      - db
+    command: sleep infinity
+
+volumes:
+  postgres_data:
