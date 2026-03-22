@@ -4,6 +4,8 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../../config/test_database_url"
 
 require 'cucumber/rails'
 

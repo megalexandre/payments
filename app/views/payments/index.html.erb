@@ -1,16 +1,45 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Pagamentos" %>
 
-<% content_for :title, "Payments" %>
+<section class="page-header">
+  <div>
+    <h1>Pagamentos</h1>
+    <p>Lista de pagamentos cadastrados no sistema.</p>
+  </div>
+  <%= link_to "Novo pagamento", new_payment_path, class: "btn btn-primary" %>
+</section>
 
-<h1>Payments</h1>
-
-<div id="payments">
-  <% @payments.each do |payment| %>
-    <%= render payment %>
-    <p>
-      <%= link_to "Show this payment", payment %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New payment", new_payment_path %>
+<section class="table-card">
+  <div class="table-wrapper">
+    <table class="payments-table" aria-label="Tabela de pagamentos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Valor</th>
+          <th>Data de vencimento</th>
+          <th>Câmbio</th>
+          <th class="actions-col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @payments.any? %>
+          <% @payments.each do |payment| %>
+            <tr id="<%= dom_id(payment) %>">
+              <td><%= payment.id %></td>
+              <td><%= number_to_currency(payment.amount || 0, unit: "R$ ", separator: ",", delimiter: ".") %></td>
+              <td><%= payment.due_date.present? ? l(payment.due_date) : "-" %></td>
+              <td><%= payment.exchanged_at.present? ? l(payment.exchanged_at, format: :short) : "-" %></td>
+              <td class="actions-col">
+                <%= link_to "Ver", payment, class: "btn btn-secondary btn-sm" %>
+                <%= link_to "Editar", edit_payment_path(payment), class: "btn btn-secondary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5" class="empty-state">Nenhum pagamento encontrado.</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
