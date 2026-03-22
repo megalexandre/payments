@@ -17,5 +17,5 @@
     }
   },
   "remoteUser": "root",
-  "postCreateCommand": "gem install rails && (bundle install || rails new . -d postgresql --api --force) && chown -R 1000:1000 ."
+  "postCreateCommand": "gem install rails && (bundle install || rails new . -d postgresql --force) && chown -R 1000:1000 ."
 }

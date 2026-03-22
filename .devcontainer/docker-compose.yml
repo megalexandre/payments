@@ -1,20 +1,25 @@
 services:
 
   db:
+    container_name: app_db
     image: postgres:15
+    ports:
+    - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+   
 
   app:
+    container_name: app
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - ..:/workspaces/app:cached
     environment:
-      DATABASE_URL: "postgres://postgres:password@db:5432/postgres"
+      DATABASE_URL: "postgres://postgres:password@db:5432/app_development"
     depends_on:
       - db
     command: sleep infinity
