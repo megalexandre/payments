@@ -13,12 +13,14 @@ Given('I am on the payments index page') do
 end
 
 Then('I should see {string} in the payments list') do |text|
+  visit payments_path
+  
   next if page.has_content?(text)
 
   normalized_text = begin
-    amount = BigDecimal(text)
+    amount = Float(text)
     ActionController::Base.helpers.number_to_currency(amount, unit: "R$ ", separator: ",", delimiter: ".")
-  rescue ArgumentError
+  rescue StandardError
     nil
   end
 
