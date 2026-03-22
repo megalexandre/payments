@@ -1,0 +1,44 @@
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Menu</h3>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <%= link_to "Dashboard", root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Pagamentos", payments_path, class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Administração</h3>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <%= link_to "Usuários", "#", class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Configurações", "#", class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Ajuda</h3>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <%= link_to "Documentação", "#", class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Suporte", "#", class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer">
+    <p class="version-text">v1.0.0</p>
+  </div>
+</aside>

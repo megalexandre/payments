@@ -1,0 +1,36 @@
+<header class="header">
+  <div class="header-content">
+    <!-- Logo/Brand -->
+    <div class="header-brand">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <%= link_to "Logo", root_path, class: "brand-link" %>
+    </div>
+
+    <!-- Center Navigation (Optional) -->
+    <nav class="header-nav">
+    </nav>
+
+    <!-- Right Menu -->
+    <div class="header-menu">
+        <div class="user-dropdown">
+          <button class="user-button" id="userMenuToggle" aria-label="User menu">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M12 14c-6 0-8 3-8 3v6h16v-6s-2-3-8-3z"></path>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="userMenu">
+            <%= link_to "Perfil", "#", class: "dropdown-item" %>
+            <%= link_to "Configurações", "#", class: "dropdown-item" %>
+            <hr class="dropdown-divider">
+          </div>
+        </div>
+    </div>
+  </div>
+</header>

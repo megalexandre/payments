@@ -1,0 +1,155 @@
+<% content_for :title, "Dashboard" %>
+
+<div class="dashboard-header">
+  <h1>Bem-vindo ao Dashboard</h1>
+  <p class="subtitle">Gerenciamento de pagamentos e dados</p>
+</div>
+
+<div class="dashboard-grid">
+  <div class="card">
+    <div class="card-header">
+      <h3>Pagamentos</h3>
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 1v22m13-11c0 6.627-5.373 12-12 12S1 18.627 1 12 6.373 0 12 0s12 5.373 12 12z"></path>
+      </svg>
+    </div>
+    <div class="card-content">
+      <p class="stat-number"><%= Payment.count %></p>
+      <p class="stat-label">Total de Pagamentos</p>
+      <%= link_to "Ver detalhes →", payments_path, class: "card-link" %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Pendentes</h3>
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="6" x2="12" y2="12"></line>
+        <line x1="12" y1="12" x2="15.5" y2="15.5"></line>
+      </svg>
+    </div>
+    <div class="card-content">
+      <p class="stat-number"><%= Payment.where(status: 'pending').count %></p>
+      <p class="stat-label">Pagamentos Pendentes</p>
+      <%= link_to "Ver detalhes →", payments_path, class: "card-link" %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Concluídos</h3>
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+    <div class="card-content">
+      <p class="stat-number"><%= Payment.where(status: 'completed').count %></p>
+      <p class="stat-label">Pagamentos Concluídos</p>
+      <%= link_to "Ver detalhes →", payments_path, class: "card-link" %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dashboard-header {
+    margin-bottom: 32px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-text);
+  }
+
+  .dashboard-header .subtitle {
+    color: var(--color-text-secondary);
+    font-size: 16px;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .card-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .card-content {
+    padding: 24px 20px;
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 8px 0;
+  }
+
+  .stat-label {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    margin: 0 0 16px 0;
+  }
+
+  .card-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+
+  .card-link:hover {
+    color: var(--color-primary-dark);
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dashboard-header h1 {
+      font-size: 24px;
+    }
+  }
+</style>
