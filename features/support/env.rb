@@ -6,6 +6,7 @@
 
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../../config/test_database_url"
+require_relative "test_database_setup"
 
 require 'cucumber/rails'
 

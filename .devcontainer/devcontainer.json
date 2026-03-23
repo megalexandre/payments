@@ -12,7 +12,9 @@
       "extensions": [
         "rebornix.Ruby",
         "castwide.solargraph",
-        "misogi.ruby-rubocop"
+        "misogi.ruby-rubocop",
+        "aliariff.vscode-erb-beautify",
+        "alexkrechik.cucumberautocomplete"
       ]
     }
   },
