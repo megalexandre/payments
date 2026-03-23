@@ -1,42 +1,22 @@
-Given('the following payments exist:') do |table|
-  table.hashes.each do |hash|
-    Payment.create!(
-      id: hash['id'],
-      amount: hash['amount'],
-      status: hash['status']
-    )
-  end
-end
+require "bigdecimal"
 
-Given('I am on the payments index page') do
-  visit payments_path
-end
+def normalized_payment_attributes(row)
+  attributes = {}
 
-Then('I should see {string} in the payments list') do |text|
-  visit payments_path
-  
-  next if page.has_content?(text)
+  row.to_h.each do |key, value|
+    normalized_key = key.downcase.gsub(/[^a-z]/, "")
 
-  normalized_text = begin
-    amount = Float(text)
-    ActionController::Base.helpers.number_to_currency(amount, unit: "R$ ", separator: ",", delimiter: ".")
-  rescue StandardError
-    nil
+    case normalized_key
+    when "amount"
+      attributes[:amount] = BigDecimal(value)
+    when "duedate"
+      attributes[:due_date] = Time.zone.parse(value)
+    when "exchangedat", "exechangedat"
+      attributes[:exchanged_at] = Time.zone.parse(value)
+    end
   end
 
-  next if normalized_text && page.has_content?(normalized_text)
-
-  raise %(Expected payments list to include #{text.inspect})
-end
-
-Then('I should see {int} payments') do |count|
-  next if page.has_css?('tr', count: count + 1)
-
-  raise %(Expected to find #{count} payments in the table)
-end
-
-Given('I am on the new payment page') do
-  visit new_payment_path
+  attributes
 end
 
 When('I fill in {string} with {string}') do |field, value|
@@ -48,29 +28,32 @@ When('I click {string}') do |button|
 end
 
 Then('I should see {string}') do |text|
-  next if page.has_content?(text)
-
-  raise %(Expected page to include #{text.inspect})
+  assert_text(text)
 end
 
-Given('a payment with amount {string} exists') do |amount|
-  @payment = Payment.create!(amount: amount)
+Then('I should see {string} in the payments list') do |text|
+  visit payments_path
+
+  within('table.payments-table') do
+    assert_text(text)
+  end
 end
 
-When('I visit the payment details page') do
-  visit payment_path(@payment)
+Then('a payment with amount {string} should exist in the database') do |amount|
+  assert(Payment.exists?(amount: BigDecimal(amount)))
 end
 
-Then('I should see the payment details') do
-  next if page.has_content?(@payment.amount.to_s)
+Then('a payment with:') do |table|
+  table.hashes.each do |row|
+    attributes = normalized_payment_attributes(row)
 
-  raise %(Expected page to include payment amount #{@payment.amount})
+    assert(
+      Payment.exists?(attributes),
+      "Expected a payment with attributes #{attributes.inspect} to exist in the database"
+    )
+  end
 end
 
-When('I visit the edit payment page') do
-  visit edit_payment_path(@payment)
-end
-
-Then('the payment should be deleted') do
-  raise "Expected payment to be deleted" if Payment.exists?(id: @payment.id)
+Then('no payments should exist in the database') do
+  assert_equal(0, Payment.count)
 end
