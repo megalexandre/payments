@@ -6,7 +6,7 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "workbench.colorTheme": "Solarized Dark" 
+        "workbench.colorTheme": "Monokai" 
       },
 
       "extensions": [
